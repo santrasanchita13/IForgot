@@ -1,5 +1,6 @@
 package com.santra.sanchita.iforgot;
 
+import android.app.Application;
 import android.support.multidex.MultiDexApplication;
 
 import com.santra.sanchita.iforgot.data.DataManager;
@@ -14,7 +15,7 @@ import javax.inject.Inject;
  * Created by sanchita on 20/11/17.
  */
 
-public class MvpApp extends MultiDexApplication {
+public class MvpApp extends Application {
 
     @Inject
     DataManager dataManager;

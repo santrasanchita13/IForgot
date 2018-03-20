@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="rounded_corners_stroke">8dp</dimen>
+    <dimen name="small_width">8dp</dimen>
+    <dimen name="medium_width">32dp</dimen>
+    <dimen name="large_width">64dp</dimen>
+    <dimen name="medium_padding">16dp</dimen>
+</resources>
