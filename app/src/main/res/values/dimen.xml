@@ -3,6 +3,15 @@
     <dimen name="rounded_corners_stroke">8dp</dimen>
     <dimen name="small_width">8dp</dimen>
     <dimen name="medium_width">32dp</dimen>
+    <dimen name="edit_text_width">40dp</dimen>
+    <dimen name="edit_text_large_width">100dp</dimen>
     <dimen name="large_width">64dp</dimen>
+
     <dimen name="medium_padding">16dp</dimen>
+    <dimen name="large_padding">32dp</dimen>
+
+    <dimen name="small_text_size">15sp</dimen>
+    
+    <integer name="max_name_size">30</integer>
+    <integer name="max_comment_size">100</integer>
 </resources>

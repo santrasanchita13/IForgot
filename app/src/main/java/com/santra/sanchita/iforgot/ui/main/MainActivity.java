@@ -32,7 +32,9 @@ import android.widget.Button;
 
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.ui.base.BaseActivity;
+import com.santra.sanchita.iforgot.ui.preview.PreviewActivity;
 import com.santra.sanchita.iforgot.utils.AppLogger;
+import com.santra.sanchita.iforgot.utils.Constants;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -81,6 +83,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     private Size imageDimension;
     private ImageReader imageReader;
     private File file;
+    private Long fileId;
     private boolean mFlashSupported;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
@@ -229,11 +232,15 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
             final File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            file = File.createTempFile(
-                    System.currentTimeMillis() + "",  /* prefix */
-                    ".jpg",         /* suffix */
-                    storageDir      /* directory */
-            );
+
+            fileId = System.currentTimeMillis();
+            file = new File(storageDir,
+                    fileId + ".jpg");
+            /*file = File.createTempFile(
+                    System.currentTimeMillis() + "",  *//* prefix *//*
+                    ".jpg",         *//* suffix *//*
+                    storageDir      *//* directory *//*
+            );*/
 
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
@@ -273,8 +280,12 @@ public class MainActivity extends BaseActivity implements MainMvpView {
                 @Override
                 public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
-                    showMessage("Saved:" + file);
-                    createCameraPreview();
+                    /*showMessage("Saved:" + file);
+                    createCameraPreview();*/
+                    Intent intentPreview = PreviewActivity.getStartIntent(MainActivity.this);
+                    intentPreview.putExtra(Constants.FILE_PATH, file.getAbsolutePath());
+                    intentPreview.putExtra(Constants.FILE_ID, fileId);
+                    startActivity(intentPreview);
                 }
             };
             cameraDevice.createCaptureSession(outputSurfaces, new CameraCaptureSession.StateCallback() {
@@ -357,6 +368,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             e.printStackTrace();
         }
     }
+
     private void closeCamera() {
         if (null != cameraDevice) {
             cameraDevice.close();
@@ -367,6 +379,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             imageReader = null;
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {

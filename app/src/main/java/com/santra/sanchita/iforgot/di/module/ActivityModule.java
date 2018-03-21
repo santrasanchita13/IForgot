@@ -8,6 +8,9 @@ import com.santra.sanchita.iforgot.di.PerActivity;
 import com.santra.sanchita.iforgot.ui.main.MainMvpPresenter;
 import com.santra.sanchita.iforgot.ui.main.MainMvpView;
 import com.santra.sanchita.iforgot.ui.main.MainPresenter;
+import com.santra.sanchita.iforgot.ui.preview.PreviewMvpPresenter;
+import com.santra.sanchita.iforgot.ui.preview.PreviewMvpView;
+import com.santra.sanchita.iforgot.ui.preview.PreviewPresenter;
 import com.santra.sanchita.iforgot.utils.rx.AppSchedulerProvider;
 import com.santra.sanchita.iforgot.utils.rx.SchedulerProvider;
 
@@ -51,6 +54,12 @@ public class ActivityModule {
     @Provides
     @PerActivity
     MainMvpPresenter<MainMvpView> provideMainPresenter(MainPresenter<MainMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    PreviewMvpPresenter<PreviewMvpView> providePreviewPresenter(PreviewPresenter<PreviewMvpView> presenter) {
         return presenter;
     }
 }

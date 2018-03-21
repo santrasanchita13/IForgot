@@ -3,6 +3,7 @@ package com.santra.sanchita.iforgot.di.component;
 import com.santra.sanchita.iforgot.di.PerActivity;
 import com.santra.sanchita.iforgot.di.module.ActivityModule;
 import com.santra.sanchita.iforgot.ui.main.MainActivity;
+import com.santra.sanchita.iforgot.ui.preview.PreviewActivity;
 
 import dagger.Component;
 
@@ -15,4 +16,6 @@ import dagger.Component;
 public interface ActivityComponent {
 
     void inject(MainActivity activity);
+
+    void inject(PreviewActivity activity);
 }
