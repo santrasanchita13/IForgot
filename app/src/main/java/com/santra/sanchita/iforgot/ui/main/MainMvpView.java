@@ -1,5 +1,6 @@
 package com.santra.sanchita.iforgot.ui.main;
 
+import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.MvpView;
 
 /**
@@ -7,4 +8,5 @@ import com.santra.sanchita.iforgot.ui.base.MvpView;
  */
 
 public interface MainMvpView extends MvpView {
+    void galleryPreview(SafeItem safeItem);
 }

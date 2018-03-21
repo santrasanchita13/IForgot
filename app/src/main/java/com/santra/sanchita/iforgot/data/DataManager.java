@@ -11,6 +11,4 @@ import io.reactivex.Observable;
  */
 
 public interface DataManager extends DbHelper, ApiHelper, PreferenceHelper {
-
-    Observable<Boolean> seedSafeItems();
 }

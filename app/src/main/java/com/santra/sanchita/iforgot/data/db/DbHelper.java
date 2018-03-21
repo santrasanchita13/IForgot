@@ -22,6 +22,8 @@ public interface DbHelper {
 
     Observable<SafeItem> getSafeItemById(Long id);
 
+    Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows);
+
     Observable<Long> getSafeItemsCount();
 
 }

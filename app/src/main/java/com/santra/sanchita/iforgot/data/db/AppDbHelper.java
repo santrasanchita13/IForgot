@@ -3,8 +3,10 @@ package com.santra.sanchita.iforgot.data.db;
 import com.santra.sanchita.iforgot.data.db.model.DaoMaster;
 import com.santra.sanchita.iforgot.data.db.model.DaoSession;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
+import com.santra.sanchita.iforgot.data.db.model.SafeItemDao;
 
 import java.util.List;
+import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -51,6 +53,11 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Observable<SafeItem> getSafeItemById(Long id) {
         return Observable.fromCallable(() -> daoSession.getSafeItemDao().load(id));
+    }
+
+    @Override
+    public Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows) {
+        return Observable.fromCallable(() -> daoSession.getSafeItemDao().queryBuilder().orderDesc(SafeItemDao.Properties.Id).limit(noOfRows).offset(0).list());
     }
 
     @Override

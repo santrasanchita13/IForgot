@@ -17,11 +17,12 @@
         android:layout_marginBottom="@dimen/medium_padding"/>
 
     <Button
+
         android:id="@+id/buttonTakePic"
         android:layout_width="@dimen/medium_width"
         android:layout_height="@dimen/medium_width"
         android:background="@drawable/round_button"
-        app:layout_constraintBottom_toTopOf="@+id/frameAd"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="@dimen/medium_padding"/>
@@ -31,11 +32,35 @@
         android:layout_width="@dimen/medium_width"
         android:layout_height="@dimen/medium_width"
         android:src="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/frameAd"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         android:layout_marginBottom="@dimen/medium_padding"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="@dimen/medium_padding"
         />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/small_text_size"
+        android:text="Where are you keeping it?"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/textViewDesc"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/textViewDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/small_text_comment_size"
+        android:text="Take a pic of the location"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/frameAd"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="@dimen/medium_padding"/>
 
     <FrameLayout
         android:id="@+id/frameAd"

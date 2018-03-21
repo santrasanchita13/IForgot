@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="rounded_corners_stroke">8dp</dimen>
+    <dimen name="smaller_width">4dp</dimen>
     <dimen name="small_width">8dp</dimen>
     <dimen name="medium_width">32dp</dimen>
     <dimen name="edit_text_width">40dp</dimen>
@@ -11,6 +11,8 @@
     <dimen name="large_padding">32dp</dimen>
 
     <dimen name="small_text_size">15sp</dimen>
+    <dimen name="small_text_comment_size">12sp</dimen>
+    <dimen name="small_icon_size">40sp</dimen>
     
     <integer name="max_name_size">30</integer>
     <integer name="max_comment_size">100</integer>

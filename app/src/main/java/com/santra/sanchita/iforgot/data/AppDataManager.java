@@ -55,21 +55,6 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<Boolean> seedSafeItems() {
-        GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-        final Gson gson = gsonBuilder.create();
-
-        return dbHelper.isSafeItemEmpty()
-                .concatMap(isEmpty -> {
-                    if(isEmpty) {
-                        List<SafeItem> designItemList = new ArrayList<>();
-                        return insertSafeItems(designItemList);
-                    }
-                    return Observable.just(false);
-                });
-    }
-
-    @Override
     public Observable<Long> insertSafeItem(SafeItem designItem) {
         return dbHelper.insertSafeItem(designItem);
     }
@@ -97,5 +82,10 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<Long> getSafeItemsCount() {
         return dbHelper.getSafeItemsCount();
+    }
+
+    @Override
+    public Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows) {
+        return dbHelper.getLastSafeItems(noOfRows);
     }
 }

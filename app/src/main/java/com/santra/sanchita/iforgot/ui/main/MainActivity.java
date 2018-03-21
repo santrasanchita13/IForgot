@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -29,8 +31,10 @@ import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.santra.sanchita.iforgot.R;
+import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.BaseActivity;
 import com.santra.sanchita.iforgot.ui.preview.PreviewActivity;
 import com.santra.sanchita.iforgot.utils.AppLogger;
@@ -67,6 +71,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @BindView(R.id.textureView)
     TextureView textureView;
+
+    @BindView(R.id.galleryImage)
+    ImageView galleryImage;
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
@@ -143,6 +150,30 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     protected void setUp() {
         textureView.setSurfaceTextureListener(textureListener);
         takePictureButton.setOnClickListener(v -> takePicture());
+
+        presenter.getSavedImage();
+    }
+
+    @Override
+    public void galleryPreview(SafeItem safeItem) {
+        if(safeItem != null) {
+            if(safeItem.getImagePath() != null) {
+                String filePath = safeItem.getImagePath();
+
+                if(filePath != null) {
+
+                    File imgFile = new File(filePath);
+
+                    if (imgFile.exists()) {
+
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                        galleryImage.setImageBitmap(myBitmap);
+
+                    }
+                }
+            }
+        }
     }
 
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
