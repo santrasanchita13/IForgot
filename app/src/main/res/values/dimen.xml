@@ -6,8 +6,9 @@
     <dimen name="edit_text_width">40dp</dimen>
     <dimen name="edit_text_large_width">100dp</dimen>
     <dimen name="large_width">64dp</dimen>
-    <dimen name="image_width">128dp</dimen>
+    <dimen name="image_width">100dp</dimen>
 
+    <dimen name="small_padding">8dp</dimen>
     <dimen name="medium_padding">16dp</dimen>
     <dimen name="large_padding">32dp</dimen>
 

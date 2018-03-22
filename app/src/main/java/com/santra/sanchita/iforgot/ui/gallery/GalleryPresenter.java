@@ -57,13 +57,13 @@ public class GalleryPresenter<V extends GalleryMvpView> extends BasePresenter<V>
                     if (!isViewAttached()) {
                         return;
                     }
-                    getMvpView().imagesByDate(images);
+                    getMvpView().imagesByDate(date, images);
                 }, throwable -> {
                     if(!isViewAttached()) {
                         return;
                     }
                     getMvpView().onError(R.string.default_error);
-                    getMvpView().imagesByDate(null);
+                    getMvpView().imagesByDate(date, null);
                 }));
     }
 }

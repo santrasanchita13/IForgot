@@ -1,6 +1,8 @@
 package com.santra.sanchita.iforgot.ui.gallery;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -39,11 +42,11 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
 
     public class ImageViewHolder extends ViewHolder {
 
-        ImageView imageBgItemProfileIntroduction;
+        ImageView imageGalleryItem;
 
         public ImageViewHolder(View view) {
             super(view);
-            imageBgItemProfileIntroduction = view.findViewById(R.id.imageGalleryItem);
+            imageGalleryItem = view.findViewById(R.id.imageGalleryItem);
         }
     }
 
@@ -55,8 +58,29 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         imageViewHolder = (ImageViewHolder) holder;
+
+        SafeItem safeItem = listSafeItems.get(position);
+
+        if(safeItem != null) {
+            if(safeItem.getImagePath() != null) {
+                String filePath = safeItem.getImagePath();
+
+                if(filePath != null) {
+
+                    File imgFile = new File(filePath);
+
+                    if (imgFile.exists()) {
+
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                        imageViewHolder.imageGalleryItem.setImageBitmap(myBitmap);
+
+                    }
+                }
+            }
+        }
     }
 
     @Override
