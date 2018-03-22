@@ -1,12 +1,14 @@
 package com.santra.sanchita.iforgot.data.db;
 
+import android.database.Cursor;
+
 import com.santra.sanchita.iforgot.data.db.model.DaoMaster;
 import com.santra.sanchita.iforgot.data.db.model.DaoSession;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.data.db.model.SafeItemDao;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -56,8 +58,29 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows) {
-        return Observable.fromCallable(() -> daoSession.getSafeItemDao().queryBuilder().orderDesc(SafeItemDao.Properties.Id).limit(noOfRows).offset(0).list());
+    public Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows, Integer offset) {
+        return Observable.fromCallable(() -> daoSession.getSafeItemDao().queryBuilder()
+                .orderDesc(SafeItemDao.Properties.Id).limit(noOfRows).offset(offset).list());
+    }
+
+    @Override
+    public Observable<List<SafeItem>> getSafeItemsByDate(String date) {
+        return Observable.fromCallable(() -> daoSession.getSafeItemDao()
+                .queryBuilder().where(SafeItemDao.Properties.SavedDate.eq(date)).orderDesc(SafeItemDao.Properties.Id).list());
+    }
+
+    @Override
+    public Observable<List<String>> getAllDates() {
+        return Observable.fromCallable(() -> {
+            List<String> allDates = new ArrayList<>();
+            Cursor mCursor = daoSession.getDatabase()
+                    .rawQuery("SELECT DISTINCT " + SafeItemDao.Properties.SavedDate.columnName + " FROM " + SafeItemDao.TABLENAME, new String[0]);
+            for(mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
+                // The Cursor is now set to the right position
+                allDates.add(mCursor.getString(0));
+            }
+            return allDates;
+        });
     }
 
     @Override

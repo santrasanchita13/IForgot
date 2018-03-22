@@ -85,7 +85,17 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows) {
-        return dbHelper.getLastSafeItems(noOfRows);
+    public Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows, Integer offset) {
+        return dbHelper.getLastSafeItems(noOfRows, offset);
+    }
+
+    @Override
+    public Observable<List<SafeItem>> getSafeItemsByDate(String date) {
+        return dbHelper.getSafeItemsByDate(date);
+    }
+
+    @Override
+    public Observable<List<String>> getAllDates() {
+        return dbHelper.getAllDates();
     }
 }

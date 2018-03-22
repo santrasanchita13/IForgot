@@ -16,6 +16,9 @@ import com.santra.sanchita.iforgot.ui.base.BaseActivity;
 import com.santra.sanchita.iforgot.utils.Constants;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -82,6 +85,10 @@ public class PreviewActivity extends BaseActivity implements PreviewMvpView {
     protected void onDestroy() {
         presenter.onDetach();
 
+        if(imgFile != null && insertedRow == -1) {
+            imgFile.delete();
+        }
+
         super.onDestroy();
     }
 
@@ -93,10 +100,15 @@ public class PreviewActivity extends BaseActivity implements PreviewMvpView {
         if(fileId != -1) {
 
             if(!previewNameEditText.getText().toString().isEmpty()) {
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.US);
+                Date netDate = (new Date(fileId));
+                String date =  sdf.format(netDate);
+
                 SafeItem safeItem = new SafeItem(fileId, previewNameEditText.getText().toString(),
                         imgFile.getAbsolutePath(),
                         previewCommentEditText.getText().toString(),
-                        fileId + "",
+                        date,
                         false);
                 presenter.addToDb(safeItem);
             }

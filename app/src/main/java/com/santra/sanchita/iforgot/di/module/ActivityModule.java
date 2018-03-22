@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.santra.sanchita.iforgot.di.ActivityContext;
 import com.santra.sanchita.iforgot.di.PerActivity;
+import com.santra.sanchita.iforgot.ui.gallery.GalleryMvpPresenter;
+import com.santra.sanchita.iforgot.ui.gallery.GalleryMvpView;
+import com.santra.sanchita.iforgot.ui.gallery.GalleryPresenter;
 import com.santra.sanchita.iforgot.ui.main.MainMvpPresenter;
 import com.santra.sanchita.iforgot.ui.main.MainMvpView;
 import com.santra.sanchita.iforgot.ui.main.MainPresenter;
@@ -60,6 +63,12 @@ public class ActivityModule {
     @Provides
     @PerActivity
     PreviewMvpPresenter<PreviewMvpView> providePreviewPresenter(PreviewPresenter<PreviewMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    GalleryMvpPresenter<GalleryMvpView> provideGalleryPresenter(GalleryPresenter<GalleryMvpView> presenter) {
         return presenter;
     }
 }

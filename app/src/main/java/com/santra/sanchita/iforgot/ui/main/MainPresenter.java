@@ -30,7 +30,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public void getSavedImage() {
         getCompositeDisposable().add(getDataManager()
-                .getLastSafeItems(1)
+                .getLastSafeItems(1, 0)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(lastRows -> {

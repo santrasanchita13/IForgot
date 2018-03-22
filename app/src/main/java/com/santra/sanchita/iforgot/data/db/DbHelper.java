@@ -22,7 +22,11 @@ public interface DbHelper {
 
     Observable<SafeItem> getSafeItemById(Long id);
 
-    Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows);
+    Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows, Integer offset);
+
+    Observable<List<SafeItem>> getSafeItemsByDate(String date);
+
+    Observable<List<String>> getAllDates();
 
     Observable<Long> getSafeItemsCount();
 

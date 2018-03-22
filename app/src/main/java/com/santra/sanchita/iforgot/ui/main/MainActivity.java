@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.BaseActivity;
+import com.santra.sanchita.iforgot.ui.gallery.GalleryActivity;
 import com.santra.sanchita.iforgot.ui.preview.PreviewActivity;
 import com.santra.sanchita.iforgot.utils.AppLogger;
 import com.santra.sanchita.iforgot.utils.Constants;
@@ -54,6 +55,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.santra.sanchita.iforgot.utils.Constants.REQUEST_CAMERA_PERMISSION;
 
@@ -152,6 +154,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         takePictureButton.setOnClickListener(v -> takePicture());
 
         presenter.getSavedImage();
+    }
+
+    @OnClick(R.id.galleryImage)
+    void clickGallery() {
+        startActivity(GalleryActivity.getStartIntent(MainActivity.this));
     }
 
     @Override
