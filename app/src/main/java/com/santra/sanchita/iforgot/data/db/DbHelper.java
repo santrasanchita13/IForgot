@@ -26,6 +26,8 @@ public interface DbHelper {
 
     Observable<List<SafeItem>> getSafeItemsByDate(String date);
 
+    Observable<List<SafeItem>> getFoundItemsByDate(String date);
+
     Observable<List<String>> getAllDates();
 
     Observable<Long> getSafeItemsCount();

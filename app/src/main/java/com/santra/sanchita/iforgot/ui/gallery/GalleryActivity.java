@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
@@ -19,6 +21,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by sanchita on 22/3/18.
@@ -36,6 +39,12 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
 
     @BindView(R.id.galleryRecyclerView)
     RecyclerView galleryRecyclerView;
+
+    @BindView(R.id.tabFoundText)
+    TextView tabFoundText;
+
+    @BindView(R.id.tabSafeText)
+    TextView tabSafeText;
 
     List<GalleryItem> galleryItemList;
 
@@ -78,6 +87,9 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
 
     @Override
     protected void setUp() {
+
+        galleryItemList = new ArrayList<>();
+
         presenter.getAllDates();
     }
 
@@ -85,11 +97,21 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
     public void allDates(List<String> dates) {
         if(dates != null && dates.size() > 0) {
 
-            galleryItemList = new ArrayList<>();
-
             for (String date : dates) {
                 if (date != null) {
                     presenter.getImagesByDate(date);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void allFound(List<String> dates) {
+        if(dates != null && dates.size() > 0) {
+
+            for (String date : dates) {
+                if (date != null) {
+                    presenter.getFoundImagesByDate(date);
                 }
             }
         }
@@ -112,5 +134,28 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
                 galleryAdapter.notifyDataSetChanged();
             }
         }
+        else {
+            galleryAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @OnClick(R.id.tabSafeText)
+    void tabSafeClick() {
+        tabSafeText.setBackground(ContextCompat.getDrawable(GalleryActivity.this, R.drawable.round_rectangle_left_pressed));
+        tabFoundText.setBackground(ContextCompat.getDrawable(GalleryActivity.this, R.drawable.round_rectangle_right));
+
+        galleryItemList.clear();
+
+        presenter.getAllDates();
+    }
+
+    @OnClick(R.id.tabFoundText)
+    void tabFoundClick() {
+        tabSafeText.setBackground(ContextCompat.getDrawable(GalleryActivity.this, R.drawable.round_rectangle_left));
+        tabFoundText.setBackground(ContextCompat.getDrawable(GalleryActivity.this, R.drawable.round_rectangle_right_pressed));
+
+        galleryItemList.clear();
+
+        presenter.getAllFoundItems();
     }
 }

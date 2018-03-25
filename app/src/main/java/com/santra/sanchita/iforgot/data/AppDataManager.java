@@ -95,6 +95,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<List<SafeItem>> getFoundItemsByDate(String date) {
+        return dbHelper.getFoundItemsByDate(date);
+    }
+
+    @Override
     public Observable<List<String>> getAllDates() {
         return dbHelper.getAllDates();
     }

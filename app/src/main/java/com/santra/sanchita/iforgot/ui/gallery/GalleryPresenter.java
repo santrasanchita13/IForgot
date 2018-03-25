@@ -48,9 +48,49 @@ public class GalleryPresenter<V extends GalleryMvpView> extends BasePresenter<V>
     }
 
     @Override
+    public void getAllFoundItems() {
+        getCompositeDisposable().add(getDataManager()
+                .getAllDates()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(allDates -> {
+                    if (!isViewAttached()) {
+                        return;
+                    }
+                    getMvpView().allFound(allDates);
+                }, throwable -> {
+                    if(!isViewAttached()) {
+                        return;
+                    }
+                    getMvpView().onError(R.string.default_error);
+                    getMvpView().allFound(null);
+                }));
+    }
+
+    @Override
     public void getImagesByDate(String date) {
         getCompositeDisposable().add(getDataManager()
                 .getSafeItemsByDate(date)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(images -> {
+                    if (!isViewAttached()) {
+                        return;
+                    }
+                    getMvpView().imagesByDate(date, images);
+                }, throwable -> {
+                    if(!isViewAttached()) {
+                        return;
+                    }
+                    getMvpView().onError(R.string.default_error);
+                    getMvpView().imagesByDate(date, null);
+                }));
+    }
+
+    @Override
+    public void getFoundImagesByDate(String date) {
+        getCompositeDisposable().add(getDataManager()
+                .getFoundItemsByDate(date)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(images -> {

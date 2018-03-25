@@ -12,5 +12,7 @@ import java.util.List;
 public interface GalleryMvpView extends MvpView {
     void allDates(List<String> dates);
 
+    void allFound(List<String> dates);
+
     void imagesByDate(String date, List<SafeItem> safeItems);
 }

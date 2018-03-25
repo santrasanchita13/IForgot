@@ -40,7 +40,33 @@
         app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
         app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
         />
-
+    <TextView
+        android:id="@+id/tabSafeText"
+        android:layout_width="@dimen/large_width"
+        android:layout_height="@dimen/medium_width"
+        android:text="Safe"
+        android:background="@drawable/round_rectangle_left_pressed"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/small_padding"
+        android:layout_marginEnd="@dimen/small_padding"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@+id/searchEditText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tabFoundText"/>
+    <TextView
+        android:id="@+id/tabFoundText"
+        android:layout_width="@dimen/large_width"
+        android:layout_height="@dimen/medium_width"
+        android:text="Found"
+        android:background="@drawable/round_rectangle_right"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/small_padding"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@+id/searchEditText"
+        app:layout_constraintLeft_toRightOf="@+id/tabSafeText"
+        app:layout_constraintRight_toRightOf="parent"/>
     <FrameLayout
         android:id="@+id/galleryFrameAd"
         app:layout_constraintBottom_toBottomOf="parent"

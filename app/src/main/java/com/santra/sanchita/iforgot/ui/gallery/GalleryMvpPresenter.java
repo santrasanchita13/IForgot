@@ -9,5 +9,9 @@ import com.santra.sanchita.iforgot.ui.base.MvpPresenter;
 public interface GalleryMvpPresenter<V extends GalleryMvpView> extends MvpPresenter<V> {
     void getAllDates();
 
+    void getAllFoundItems();
+
     void getImagesByDate(String date);
+
+    void getFoundImagesByDate(String date);
 }

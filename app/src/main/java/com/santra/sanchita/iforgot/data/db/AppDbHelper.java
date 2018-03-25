@@ -66,7 +66,13 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Observable<List<SafeItem>> getSafeItemsByDate(String date) {
         return Observable.fromCallable(() -> daoSession.getSafeItemDao()
-                .queryBuilder().where(SafeItemDao.Properties.SavedDate.eq(date)).orderDesc(SafeItemDao.Properties.Id).list());
+                .queryBuilder().where(SafeItemDao.Properties.SavedDate.eq(date), SafeItemDao.Properties.IsFound.eq(false)).orderDesc(SafeItemDao.Properties.Id).list());
+    }
+
+    @Override
+    public Observable<List<SafeItem>> getFoundItemsByDate(String date) {
+        return Observable.fromCallable(() -> daoSession.getSafeItemDao()
+                .queryBuilder().where(SafeItemDao.Properties.SavedDate.eq(date), SafeItemDao.Properties.IsFound.eq(true)).orderDesc(SafeItemDao.Properties.Id).list());
     }
 
     @Override
