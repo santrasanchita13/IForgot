@@ -28,6 +28,10 @@ public interface DbHelper {
 
     Observable<List<SafeItem>> getFoundItemsByDate(String date);
 
+    Observable<List<SafeItem>> getSafeItemsByDateAndSearch(String date, String search);
+
+    Observable<List<SafeItem>> getFoundItemsByDateAndSearch(String date, String search);
+
     Observable<List<String>> getAllDates();
 
     Observable<Long> getSafeItemsCount();

@@ -9,6 +9,6 @@
         android:id="@+id/imageGalleryItem"
         android:layout_width="@dimen/image_width"
         android:layout_height="@dimen/image_width"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         android:src="@color/white"/>
 </android.support.constraint.ConstraintLayout>

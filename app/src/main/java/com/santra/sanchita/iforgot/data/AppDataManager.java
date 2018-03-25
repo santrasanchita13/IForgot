@@ -100,6 +100,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<List<SafeItem>> getSafeItemsByDateAndSearch(String date, String search) {
+        return dbHelper.getSafeItemsByDateAndSearch(date, search);
+    }
+
+    @Override
+    public Observable<List<SafeItem>> getFoundItemsByDateAndSearch(String date, String search) {
+        return dbHelper.getFoundItemsByDateAndSearch(date, search);
+    }
+
+    @Override
     public Observable<List<String>> getAllDates() {
         return dbHelper.getAllDates();
     }

@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.santra.sanchita.iforgot.R;
+import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,9 +44,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         TextView dateText;
         RecyclerView galleryItemRecyclerView;
         GalleryItemAdapter galleryItemAdapter;
+        List<SafeItem> safeItemList;
 
         public GalleryViewHolder(View view) {
             super(view);
+            safeItemList = new ArrayList<>();
             dateText = view.findViewById(R.id.dateText);
             galleryItemRecyclerView = view.findViewById(R.id.galleryItemRecyclerView);
         }
@@ -65,8 +69,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         galleryViewHolder.dateText.setText(galleryItem.getDate());
 
+        galleryViewHolder.safeItemList.clear();
+        galleryViewHolder.safeItemList.addAll(galleryItem.getSafeItems());
+
         if(galleryViewHolder.galleryItemAdapter == null) {
-            galleryViewHolder.galleryItemAdapter = new GalleryItemAdapter(context, galleryItem.getSafeItems(), container);
+            galleryViewHolder.galleryItemAdapter = new GalleryItemAdapter(context, galleryViewHolder.safeItemList, container);
             RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(context, 3);
             galleryViewHolder.galleryItemRecyclerView.setLayoutManager(mLayoutManager);
             galleryViewHolder.galleryItemRecyclerView.setAdapter(galleryViewHolder.galleryItemAdapter);

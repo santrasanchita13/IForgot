@@ -66,13 +66,37 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Observable<List<SafeItem>> getSafeItemsByDate(String date) {
         return Observable.fromCallable(() -> daoSession.getSafeItemDao()
-                .queryBuilder().where(SafeItemDao.Properties.SavedDate.eq(date), SafeItemDao.Properties.IsFound.eq(false)).orderDesc(SafeItemDao.Properties.Id).list());
+                .queryBuilder().where(SafeItemDao.Properties.SavedDate.eq(date),
+                        SafeItemDao.Properties.IsFound.eq(false)).orderDesc(SafeItemDao.Properties.Id).list());
     }
 
     @Override
     public Observable<List<SafeItem>> getFoundItemsByDate(String date) {
         return Observable.fromCallable(() -> daoSession.getSafeItemDao()
-                .queryBuilder().where(SafeItemDao.Properties.SavedDate.eq(date), SafeItemDao.Properties.IsFound.eq(true)).orderDesc(SafeItemDao.Properties.Id).list());
+                .queryBuilder().where(SafeItemDao.Properties.SavedDate.eq(date),
+                        SafeItemDao.Properties.IsFound.eq(true)).orderDesc(SafeItemDao.Properties.Id).list());
+    }
+
+    @Override
+    public Observable<List<SafeItem>> getSafeItemsByDateAndSearch(String date, String search) {
+        return Observable.fromCallable(() -> daoSession.getSafeItemDao()
+                .queryBuilder().where(SafeItemDao.Properties.SavedDate.eq(date),
+                        SafeItemDao.Properties.IsFound.eq(false),
+                        daoSession.getSafeItemDao()
+                                .queryBuilder().or(SafeItemDao.Properties.SafeItemName.like("%" + search + "%"),
+                                SafeItemDao.Properties.Description.like("%" + search + "%")))
+                .orderDesc(SafeItemDao.Properties.Id).list());
+    }
+
+    @Override
+    public Observable<List<SafeItem>> getFoundItemsByDateAndSearch(String date, String search) {
+        return Observable.fromCallable(() -> daoSession.getSafeItemDao()
+                .queryBuilder().where(SafeItemDao.Properties.SavedDate.eq(date),
+                        SafeItemDao.Properties.IsFound.eq(true),
+                        daoSession.getSafeItemDao()
+                                .queryBuilder().or(SafeItemDao.Properties.SafeItemName.like("%" + search + "%"),
+                                SafeItemDao.Properties.Description.like("%" + search + "%")))
+                .orderDesc(SafeItemDao.Properties.Id).list());
     }
 
     @Override

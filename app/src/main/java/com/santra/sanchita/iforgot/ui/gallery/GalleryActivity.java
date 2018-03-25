@@ -7,7 +7,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.santra.sanchita.iforgot.R;
@@ -46,7 +49,14 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
     @BindView(R.id.tabSafeText)
     TextView tabSafeText;
 
+    @BindView(R.id.searchEditText)
+    EditText searchEditText;
+
     List<GalleryItem> galleryItemList;
+
+    String search = "";
+
+    boolean safeTabSelected = true;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, GalleryActivity.class);
@@ -90,6 +100,32 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
 
         galleryItemList = new ArrayList<>();
 
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s != null) {
+                    search = s.toString();
+
+                    if(safeTabSelected) {
+                        presenter.getAllDates();
+                    }
+                    else {
+                        presenter.getAllFoundItems();
+                    }
+                }
+            }
+        });
+
         presenter.getAllDates();
     }
 
@@ -97,9 +133,16 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
     public void allDates(List<String> dates) {
         if(dates != null && dates.size() > 0) {
 
+            galleryItemList.clear();
+
             for (String date : dates) {
                 if (date != null) {
-                    presenter.getImagesByDate(date);
+                    if(search != null && !search.isEmpty()) {
+                        presenter.getImagesByDateAndSearch(date, search);
+                    }
+                    else {
+                        presenter.getImagesByDate(date);
+                    }
                 }
             }
         }
@@ -109,9 +152,16 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
     public void allFound(List<String> dates) {
         if(dates != null && dates.size() > 0) {
 
+            galleryItemList.clear();
+
             for (String date : dates) {
                 if (date != null) {
-                    presenter.getFoundImagesByDate(date);
+                    if(search != null && !search.isEmpty()) {
+                        presenter.getFoundImagesByDateAndSearch(date, search);
+                    }
+                    else {
+                        presenter.getFoundImagesByDate(date);
+                    }
                 }
             }
         }
@@ -141,20 +191,22 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
 
     @OnClick(R.id.tabSafeText)
     void tabSafeClick() {
+
+        safeTabSelected = true;
+
         tabSafeText.setBackground(ContextCompat.getDrawable(GalleryActivity.this, R.drawable.round_rectangle_left_pressed));
         tabFoundText.setBackground(ContextCompat.getDrawable(GalleryActivity.this, R.drawable.round_rectangle_right));
-
-        galleryItemList.clear();
 
         presenter.getAllDates();
     }
 
     @OnClick(R.id.tabFoundText)
     void tabFoundClick() {
+
+        safeTabSelected = false;
+
         tabSafeText.setBackground(ContextCompat.getDrawable(GalleryActivity.this, R.drawable.round_rectangle_left));
         tabFoundText.setBackground(ContextCompat.getDrawable(GalleryActivity.this, R.drawable.round_rectangle_right_pressed));
-
-        galleryItemList.clear();
 
         presenter.getAllFoundItems();
     }

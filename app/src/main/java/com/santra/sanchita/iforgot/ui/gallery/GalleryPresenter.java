@@ -106,4 +106,44 @@ public class GalleryPresenter<V extends GalleryMvpView> extends BasePresenter<V>
                     getMvpView().imagesByDate(date, null);
                 }));
     }
+
+    @Override
+    public void getImagesByDateAndSearch(String date, String search) {
+        getCompositeDisposable().add(getDataManager()
+                .getSafeItemsByDateAndSearch(date, search)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(images -> {
+                    if (!isViewAttached()) {
+                        return;
+                    }
+                    getMvpView().imagesByDate(date, images);
+                }, throwable -> {
+                    if(!isViewAttached()) {
+                        return;
+                    }
+                    getMvpView().onError(R.string.default_error);
+                    getMvpView().imagesByDate(date, null);
+                }));
+    }
+
+    @Override
+    public void getFoundImagesByDateAndSearch(String date, String search) {
+        getCompositeDisposable().add(getDataManager()
+                .getFoundItemsByDateAndSearch(date, search)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(images -> {
+                    if (!isViewAttached()) {
+                        return;
+                    }
+                    getMvpView().imagesByDate(date, images);
+                }, throwable -> {
+                    if(!isViewAttached()) {
+                        return;
+                    }
+                    getMvpView().onError(R.string.default_error);
+                    getMvpView().imagesByDate(date, null);
+                }));
+    }
 }

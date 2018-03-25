@@ -14,4 +14,8 @@ public interface GalleryMvpPresenter<V extends GalleryMvpView> extends MvpPresen
     void getImagesByDate(String date);
 
     void getFoundImagesByDate(String date);
+
+    void getImagesByDateAndSearch(String date, String search);
+
+    void getFoundImagesByDateAndSearch(String date, String search);
 }
