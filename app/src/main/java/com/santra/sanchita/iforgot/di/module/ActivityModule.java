@@ -14,6 +14,9 @@ import com.santra.sanchita.iforgot.ui.main.MainPresenter;
 import com.santra.sanchita.iforgot.ui.preview.PreviewMvpPresenter;
 import com.santra.sanchita.iforgot.ui.preview.PreviewMvpView;
 import com.santra.sanchita.iforgot.ui.preview.PreviewPresenter;
+import com.santra.sanchita.iforgot.ui.view_image.ViewImageMvpPresenter;
+import com.santra.sanchita.iforgot.ui.view_image.ViewImageMvpView;
+import com.santra.sanchita.iforgot.ui.view_image.ViewImagePresenter;
 import com.santra.sanchita.iforgot.utils.rx.AppSchedulerProvider;
 import com.santra.sanchita.iforgot.utils.rx.SchedulerProvider;
 
@@ -69,6 +72,12 @@ public class ActivityModule {
     @Provides
     @PerActivity
     GalleryMvpPresenter<GalleryMvpView> provideGalleryPresenter(GalleryPresenter<GalleryMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    ViewImageMvpPresenter<ViewImageMvpView> provideViewImagePresenter(ViewImagePresenter<ViewImageMvpView> presenter) {
         return presenter;
     }
 }

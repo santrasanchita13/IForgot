@@ -18,6 +18,8 @@ import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -171,7 +173,7 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
     public void imagesByDate(String date, List<SafeItem> safeItems) {
         if(safeItems != null && safeItems.size() > 0) {
 
-            galleryItemList.add(new GalleryItem(date, safeItems));
+            galleryItemList.add(0, new GalleryItem(date, safeItems));
 
             if(galleryAdapter == null) {
                 galleryAdapter = new GalleryAdapter(GalleryActivity.this, galleryItemList, container);
