@@ -1,5 +1,6 @@
 package com.santra.sanchita.iforgot.ui.view_image;
 
+import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.MvpView;
 
 /**
@@ -7,4 +8,6 @@ import com.santra.sanchita.iforgot.ui.base.MvpView;
  */
 
 public interface ViewImageMvpView extends MvpView {
+    void imageFetched(SafeItem safeItem);
+    void imageMarkedAsFound();
 }

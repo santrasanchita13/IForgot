@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.santra.sanchita.iforgot.ui.view_image.ZoomageView
+        android:id="@+id/zoomageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:zoomage_restrictBounds="false"
+        app:zoomage_animateOnReset="true"
+        app:zoomage_autoResetMode="UNDER"
+        app:zoomage_autoCenter="true"
+        app:zoomage_zoomable="true"
+        app:zoomage_translatable="true"
+        app:zoomage_minScale="0.6"
+        app:zoomage_maxScale="8" />
+    <TextView
+        android:id="@+id/textMarkAsFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mark as found"
+        android:textColor="@color/light_grey"
+        android:textSize="@dimen/small_text_comment_size"
+        app:layout_constraintTop_toBottomOf="@id/buttonMarkAsFound"
+        app:layout_constraintRight_toRightOf="@id/buttonMarkAsFound"
+        app:layout_constraintLeft_toLeftOf="@id/buttonMarkAsFound"/>
+    <Button
+        android:id="@+id/buttonMarkAsFound"
+        android:layout_width="@dimen/edit_text_large_width"
+        android:layout_height="@dimen/large_width"
+        android:background="@null"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/fa_icon_archive"
+        android:fontFamily="@font/fontawesome"
+        android:textSize="@dimen/small_icon_size"
+        app:layout_constraintRight_toRightOf="parent"/>
 </android.support.constraint.ConstraintLayout>

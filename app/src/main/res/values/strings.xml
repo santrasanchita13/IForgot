@@ -5,4 +5,5 @@
 
     <string name="fa_icon_check">&#xf14a;</string>
     <string name="fa_icon_filter">&#xf0b0;</string>
+    <string name="fa_icon_archive">&#xf187;</string>
 </resources>

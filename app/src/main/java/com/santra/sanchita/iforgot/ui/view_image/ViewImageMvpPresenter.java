@@ -7,4 +7,6 @@ import com.santra.sanchita.iforgot.ui.base.MvpPresenter;
  */
 
 public interface ViewImageMvpPresenter<V extends ViewImageMvpView> extends MvpPresenter<V> {
+    void getImage(Long id);
+    void markAsFound(Long id);
 }

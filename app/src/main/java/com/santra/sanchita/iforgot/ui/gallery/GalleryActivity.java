@@ -79,6 +79,8 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
         if(savedInstanceState != null) {
             return;
         }
+
+        galleryItemList = new ArrayList<>();
     }
 
     @Override
@@ -99,8 +101,6 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
 
     @Override
     protected void setUp() {
-
-        galleryItemList = new ArrayList<>();
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override

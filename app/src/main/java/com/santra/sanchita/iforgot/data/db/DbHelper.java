@@ -22,6 +22,8 @@ public interface DbHelper {
 
     Observable<SafeItem> getSafeItemById(Long id);
 
+    Observable<Boolean> markItemFoundById(Long id);
+
     Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows, Integer offset);
 
     Observable<List<SafeItem>> getSafeItemsByDate(String date);

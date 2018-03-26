@@ -58,6 +58,16 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Observable<Boolean> markItemFoundById(Long id) {
+        return Observable.fromCallable(() -> {
+            SafeItem safeItem = daoSession.getSafeItemDao().load(id);
+            safeItem.setIsFound(true);
+            daoSession.getSafeItemDao().update(safeItem);
+            return true;
+        });
+    }
+
+    @Override
     public Observable<List<SafeItem>> getLastSafeItems(Integer noOfRows, Integer offset) {
         return Observable.fromCallable(() -> daoSession.getSafeItemDao().queryBuilder()
                 .orderDesc(SafeItemDao.Properties.Id).limit(noOfRows).offset(offset).list());

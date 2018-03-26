@@ -80,6 +80,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Observable<Boolean> markItemFoundById(Long id) {
+        return dbHelper.markItemFoundById(id);
+    }
+
+    @Override
     public Observable<Long> getSafeItemsCount() {
         return dbHelper.getSafeItemsCount();
     }
