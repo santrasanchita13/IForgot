@@ -10,9 +10,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -149,6 +151,12 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
                     }
                 }
             }
+        });
+
+        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
+            hideKeyboard();
+            // Return true if you have consumed the action, else false.
+            return true;
         });
 
         popupMenu = new PopupMenu(GalleryActivity.this, setDurationButton);

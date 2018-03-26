@@ -6,9 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
@@ -94,7 +97,11 @@ public class PreviewActivity extends BaseActivity implements PreviewMvpView {
 
     @OnClick(R.id.buttonPreviewSave)
     public void savePic() {
+        savePicAndReturn();
+    }
 
+    @Override
+    public void savePicAndReturn() {
         Long fileId = getIntent().getLongExtra(Constants.FILE_ID, -1);
 
         if(fileId != -1) {
@@ -142,6 +149,32 @@ public class PreviewActivity extends BaseActivity implements PreviewMvpView {
 
             }
         }
+
+        previewCommentEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (event != null) {
+                // if shift key is down, then we want to insert the '\n' char in the TextView;
+                // otherwise, the default action is to send the message.
+                if (!event.isShiftPressed()) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH
+                            || actionId == EditorInfo.IME_ACTION_DONE
+                            || event.getAction() == KeyEvent.ACTION_DOWN
+                            && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        savePicAndReturn();
+                        return true;
+                    }
+                }
+            }
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH
+                    || actionId == EditorInfo.IME_ACTION_DONE
+                    || event.getAction() == KeyEvent.ACTION_DOWN
+                    && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                savePicAndReturn();
+                return true;
+            }
+            // Return true if you have consumed the action, else false.
+            return false;
+        });
     }
 
     @Override

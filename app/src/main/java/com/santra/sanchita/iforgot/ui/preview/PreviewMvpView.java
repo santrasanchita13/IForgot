@@ -8,4 +8,6 @@ import com.santra.sanchita.iforgot.ui.base.MvpView;
 
 public interface PreviewMvpView extends MvpView {
     void nextActivity(long rowId);
+
+    void savePicAndReturn();
 }

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_text_width"
         android:textSize="@dimen/small_text_size"
+        android:inputType="text"
         android:textColor="@color/black"
         android:background="@color/white"
         android:hint="Search"

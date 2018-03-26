@@ -17,6 +17,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/dateText"
         android:paddingStart="@dimen/medium_padding"
-        android:paddingEnd="0dp"
-        android:paddingBottom="@dimen/small_padding"/>
+        android:paddingEnd="0dp"/>
 </android.support.constraint.ConstraintLayout>
