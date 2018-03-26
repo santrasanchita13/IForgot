@@ -174,31 +174,18 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
     @Override
     public void imagesByDate(String date, List<SafeItem> safeItems) {
         if(safeItems != null && safeItems.size() > 0) {
-
             galleryItemList.add(0, new GalleryItem(date, safeItems));
+        }
 
-            if(galleryAdapter == null) {
-                galleryAdapter = new GalleryAdapter(GalleryActivity.this, galleryItemList, container);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(GalleryActivity.this);
-                galleryRecyclerView.setLayoutManager(mLayoutManager);
-                galleryRecyclerView.setAdapter(galleryAdapter);
-                galleryAdapter.notifyDataSetChanged();
-            }
-            else {
-                galleryAdapter.notifyDataSetChanged();
-            }
+        if(galleryAdapter == null) {
+            galleryAdapter = new GalleryAdapter(GalleryActivity.this, galleryItemList, container);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(GalleryActivity.this);
+            galleryRecyclerView.setLayoutManager(mLayoutManager);
+            galleryRecyclerView.setAdapter(galleryAdapter);
+            galleryAdapter.notifyDataSetChanged();
         }
         else {
-            if(galleryAdapter == null) {
-                galleryAdapter = new GalleryAdapter(GalleryActivity.this, galleryItemList, container);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(GalleryActivity.this);
-                galleryRecyclerView.setLayoutManager(mLayoutManager);
-                galleryRecyclerView.setAdapter(galleryAdapter);
-                galleryAdapter.notifyDataSetChanged();
-            }
-            else {
-                galleryAdapter.notifyDataSetChanged();
-            }
+            galleryAdapter.notifyDataSetChanged();
         }
     }
 
