@@ -102,30 +102,6 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
         if(savedInstanceState != null) {
             return;
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        hideActionBar();
-
-        setUp();
-    }
-
-    @Override
-    protected void onDestroy() {
-        presenter.onDetach();
-
-        super.onDestroy();
-    }
-
-    @Override
-    protected void setUp() {
-
-        if(galleryItemList == null) {
-            galleryItemList = new ArrayList<>();
-        }
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -152,6 +128,30 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        hideActionBar();
+
+        setUp();
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.onDetach();
+
+        super.onDestroy();
+    }
+
+    @Override
+    protected void setUp() {
+
+        if(galleryItemList == null) {
+            galleryItemList = new ArrayList<>();
+        }
 
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
             hideKeyboard();
@@ -225,7 +225,12 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
             return true;
         });
 
-        presenter.getAllDates();
+        if(safeTabSelected) {
+            presenter.getAllDates();
+        }
+        else {
+            presenter.getAllFoundItems();
+        }
     }
 
     @Override
