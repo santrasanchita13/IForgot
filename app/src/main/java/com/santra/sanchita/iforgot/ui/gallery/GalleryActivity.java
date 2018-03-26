@@ -79,8 +79,6 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
         if(savedInstanceState != null) {
             return;
         }
-
-        galleryItemList = new ArrayList<>();
     }
 
     @Override
@@ -101,6 +99,10 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
 
     @Override
     protected void setUp() {
+
+        if(galleryItemList == null) {
+            galleryItemList = new ArrayList<>();
+        }
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -187,7 +189,16 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
             }
         }
         else {
-            galleryAdapter.notifyDataSetChanged();
+            if(galleryAdapter == null) {
+                galleryAdapter = new GalleryAdapter(GalleryActivity.this, galleryItemList, container);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(GalleryActivity.this);
+                galleryRecyclerView.setLayoutManager(mLayoutManager);
+                galleryRecyclerView.setAdapter(galleryAdapter);
+                galleryAdapter.notifyDataSetChanged();
+            }
+            else {
+                galleryAdapter.notifyDataSetChanged();
+            }
         }
     }
 
