@@ -15,4 +15,6 @@ public interface GalleryMvpView extends MvpView {
     void allFound(List<String> dates);
 
     void imagesByDate(String date, List<SafeItem> safeItems);
+
+    void selectDateRange();
 }

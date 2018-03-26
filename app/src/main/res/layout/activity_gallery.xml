@@ -23,7 +23,6 @@
         android:layout_width="@dimen/edit_text_width"
         android:layout_height="@dimen/edit_text_width"
         android:text="@string/fa_icon_filter"
-        android:visibility="gone"
         android:gravity="center"
         android:background="@null"
         android:textColor="@color/black"
