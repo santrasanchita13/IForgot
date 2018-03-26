@@ -187,19 +187,19 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
                     case 102:
                         endFilter = today;
                         calendar.setTime(today);
-                        calendar.add(Calendar.WEEK_OF_YEAR, 1);
+                        calendar.add(Calendar.WEEK_OF_YEAR, -1);
                         startFilter = calendar.getTime();
                         break;
                     case 103:
                         endFilter = today;
                         calendar.setTime(today);
-                        calendar.add(Calendar.MONTH, 1);
+                        calendar.add(Calendar.MONTH, -1);
                         startFilter = calendar.getTime();
                         break;
                     case 104:
                         endFilter = today;
                         calendar.setTime(today);
-                        calendar.add(Calendar.YEAR, 1);
+                        calendar.add(Calendar.YEAR, -1);
                         startFilter = calendar.getTime();
                         break;
                     case 105:
