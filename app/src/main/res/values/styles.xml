@@ -10,6 +10,7 @@
 
     <style name="CustomDialog" parent="@style/Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">false</item>
+        <item name="android:background">@color/grey</item>
     </style>
 
     <declare-styleable name="ZoomageView">

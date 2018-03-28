@@ -41,6 +41,9 @@ public class ViewImageActivity extends BaseActivity implements ViewImageMvpView 
     @BindView(R.id.buttonMarkAsFound)
     Button buttonMarkAsFound;
 
+    @BindView(R.id.descText)
+    TextView descText;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, ViewImageActivity.class);
         return intent;
@@ -104,13 +107,21 @@ public class ViewImageActivity extends BaseActivity implements ViewImageMvpView 
 
                         zoomageView.setImageBitmap(myBitmap);
 
+                        if(safeItem.getDescription() != null && !safeItem.getDescription().isEmpty()) {
+                            descText.setVisibility(View.VISIBLE);
+                            descText.setText(safeItem.getDescription());
+                        }
+                        else {
+                            descText.setVisibility(View.GONE);
+                        }
+
                         if(safeItem.getIsFound()) {
                             textMarkAsFound.setVisibility(View.GONE);
-                            buttonMarkAsFound.setVisibility(View.GONE);
+                            //buttonMarkAsFound.setVisibility(View.GONE);
                         }
                         else {
                             textMarkAsFound.setVisibility(View.VISIBLE);
-                            buttonMarkAsFound.setVisibility(View.VISIBLE);
+                            //buttonMarkAsFound.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -130,6 +141,6 @@ public class ViewImageActivity extends BaseActivity implements ViewImageMvpView 
     @Override
     public void imageMarkedAsFound() {
         textMarkAsFound.setVisibility(View.GONE);
-        buttonMarkAsFound.setVisibility(View.GONE);
+        //buttonMarkAsFound.setVisibility(View.GONE);
     }
 }

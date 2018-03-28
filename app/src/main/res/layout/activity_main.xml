@@ -62,9 +62,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="@dimen/medium_padding"/>
 
-    <FrameLayout
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/frameAd"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/large_width"/>
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/test_ad_unit"/>
 </android.support.constraint.ConstraintLayout>

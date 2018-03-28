@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.BaseActivity;
@@ -50,6 +53,9 @@ public class PreviewActivity extends BaseActivity implements PreviewMvpView {
     @BindView(R.id.previewImageView)
     ImageView previewImageView;
 
+    @BindView(R.id.framePreviewAd)
+    AdView framePreviewAd;
+
     File imgFile;
 
     long insertedRow = -1;
@@ -69,6 +75,11 @@ public class PreviewActivity extends BaseActivity implements PreviewMvpView {
         setUnBinder(ButterKnife.bind(this));
 
         presenter.onAttach(this);
+
+        MobileAds.initialize(this, getString(R.string.ad_mob_id));
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        framePreviewAd.loadAd(adRequest);
 
         if(savedInstanceState != null) {
             return;

@@ -1,5 +1,7 @@
 package com.santra.sanchita.iforgot.ui.gallery;
 
+import android.view.MenuItem;
+
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.MvpView;
 
@@ -16,5 +18,5 @@ public interface GalleryMvpView extends MvpView {
 
     void imagesByDate(String date, List<SafeItem> safeItems);
 
-    void selectDateRange();
+    void selectDateRange(MenuItem menuItem);
 }

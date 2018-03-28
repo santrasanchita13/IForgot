@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">IForgot</string>
+    <string name="app_name">Keep it safe</string>
+    <string name="ad_mob_id">ca-app-pub-5770801106457199~1801139553</string>
+    <string name="test_ad_unit">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_unit_id_1">ca-app-pub-5770801106457199/1503424959</string>
+    <string name="ad_unit_id_gallery">ca-app-pub-5770801106457199/3733523541</string>
+    <string name="ad_unit_id_preview">ca-app-pub-5770801106457199/8313990283</string>
     <string name="default_text">Default text</string>
     <string name="default_error">Error!!</string>
 

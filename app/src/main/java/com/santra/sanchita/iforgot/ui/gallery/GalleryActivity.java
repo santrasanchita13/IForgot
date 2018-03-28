@@ -1,6 +1,6 @@
 package com.santra.sanchita.iforgot.ui.gallery;
 
-import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,29 +10,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.BaseActivity;
 
-import java.sql.Timestamp;
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -72,6 +68,9 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
     @BindView(R.id.setDurationButton)
     Button setDurationButton;
 
+    @BindView(R.id.galleryFrameAd)
+    AdView galleryFrameAd;
+
     PopupMenu popupMenu;
 
     List<GalleryItem> galleryItemList;
@@ -82,6 +81,8 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
 
     Date startFilter = null;
     Date endFilter = null;
+
+    MenuItem lastChecked = null;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, GalleryActivity.class);
@@ -98,6 +99,11 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
         setUnBinder(ButterKnife.bind(this));
 
         presenter.onAttach(this);
+
+        MobileAds.initialize(this, getString(R.string.ad_mob_id));
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        galleryFrameAd.loadAd(adRequest);
 
         if(savedInstanceState != null) {
             return;
@@ -159,13 +165,16 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
             return true;
         });
 
-        popupMenu = new PopupMenu(GalleryActivity.this, setDurationButton);
-        popupMenu.getMenu().add(101, 101, 101, "Today");
-        popupMenu.getMenu().add(102, 102, 102, "This week");
-        popupMenu.getMenu().add(103, 103, 103, "This month");
-        popupMenu.getMenu().add(104, 104, 104, "This year");
-        popupMenu.getMenu().add(105, 105, 105, "Set range");
-        popupMenu.getMenu().add(106, 106, 106, "Clear filter");
+        if(popupMenu == null) {
+            popupMenu = new PopupMenu(GalleryActivity.this, setDurationButton);
+            popupMenu.getMenu().add(101, 101, 101, "Today").setCheckable(true);
+            popupMenu.getMenu().add(102, 102, 102, "This week").setCheckable(true);
+            popupMenu.getMenu().add(103, 103, 103, "This month").setCheckable(true);
+            popupMenu.getMenu().add(104, 104, 104, "This year").setCheckable(true);
+            popupMenu.getMenu().add(105, 105, 105, "Set range").setCheckable(true);
+            lastChecked = popupMenu.getMenu().add(106, 106, 106, "No filter").setCheckable(true).setChecked(true);
+        }
+
         popupMenu.setOnMenuItemClickListener(item -> {
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -183,35 +192,77 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
                     case 101:
                         startFilter = today;
                         endFilter = today;
+
+                        if(lastChecked != null) {
+                            lastChecked.setChecked(false);
+                        }
+
+                        lastChecked = item;
+                        item.setChecked(true);
                         break;
                     case 102:
                         endFilter = today;
                         calendar.setTime(today);
                         calendar.add(Calendar.WEEK_OF_YEAR, -1);
                         startFilter = calendar.getTime();
+
+                        if(lastChecked != null) {
+                            lastChecked.setChecked(false);
+                        }
+
+                        lastChecked = item;
+                        item.setChecked(true);
                         break;
                     case 103:
                         endFilter = today;
                         calendar.setTime(today);
                         calendar.add(Calendar.MONTH, -1);
                         startFilter = calendar.getTime();
+
+                        if(lastChecked != null) {
+                            lastChecked.setChecked(false);
+                        }
+
+                        lastChecked = item;
+                        item.setChecked(true);
                         break;
                     case 104:
                         endFilter = today;
                         calendar.setTime(today);
                         calendar.add(Calendar.YEAR, -1);
                         startFilter = calendar.getTime();
+
+                        if(lastChecked != null) {
+                            lastChecked.setChecked(false);
+                        }
+
+                        lastChecked = item;
+                        item.setChecked(true);
                         break;
                     case 105:
-                        selectDateRange();
+                        selectDateRange(item);
                         break;
                     case 106:
                         startFilter = null;
                         endFilter = null;
+
+                        if(lastChecked != null) {
+                            lastChecked.setChecked(false);
+                        }
+
+                        lastChecked = item;
+                        item.setChecked(true);
                         break;
                     default:
                         startFilter = null;
                         endFilter = null;
+
+                        if(lastChecked != null) {
+                            lastChecked.setChecked(false);
+                        }
+
+                        lastChecked = item;
+                        item.setChecked(true);
                         break;
                 }
 
@@ -352,7 +403,7 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
     }
 
     @Override
-    public void selectDateRange() {
+    public void selectDateRange(MenuItem menuItem) {
         DatePickerFragment date = new DatePickerFragment();
 
         Calendar calender = Calendar.getInstance();
@@ -420,6 +471,13 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
                     try {
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                         endFilter = dateFormat1.parse(date11);
+
+                        if(lastChecked != null) {
+                            lastChecked.setChecked(false);
+                        }
+
+                        lastChecked = menuItem;
+                        menuItem.setChecked(true);
 
                         if(safeTabSelected) {
                             presenter.getAllDates();

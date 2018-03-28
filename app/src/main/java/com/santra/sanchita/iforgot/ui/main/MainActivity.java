@@ -33,6 +33,9 @@ import android.view.TextureView;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.BaseActivity;
@@ -77,6 +80,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @BindView(R.id.galleryImage)
     ImageView galleryImage;
 
+    @BindView(R.id.frameAd)
+    AdView frameAd;
+
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
@@ -112,6 +118,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         setUnBinder(ButterKnife.bind(this));
 
         presenter.onAttach(this);
+
+        MobileAds.initialize(this, getString(R.string.ad_mob_id));
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        frameAd.loadAd(adRequest);
 
         if(savedInstanceState != null) {
             return;

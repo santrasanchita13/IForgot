@@ -16,20 +16,31 @@
         app:zoomage_minScale="0.6"
         app:zoomage_maxScale="8" />
     <TextView
+        android:id="@+id/descText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/default_text"
+        android:padding="@dimen/medium_padding"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textAlignment="center"
+        />
+    <TextView
         android:id="@+id/textMarkAsFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Mark as found"
-        android:textColor="@color/light_grey"
-        android:textSize="@dimen/small_text_comment_size"
-        app:layout_constraintTop_toBottomOf="@id/buttonMarkAsFound"
-        app:layout_constraintRight_toRightOf="@id/buttonMarkAsFound"
-        app:layout_constraintLeft_toLeftOf="@id/buttonMarkAsFound"/>
+        android:textColor="@color/white"
+        android:textSize="@dimen/small_text_size"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="@dimen/medium_padding"/>
     <Button
         android:id="@+id/buttonMarkAsFound"
         android:layout_width="@dimen/edit_text_large_width"
         android:layout_height="@dimen/large_width"
         android:background="@null"
+        android:visibility="gone"
         android:textColor="@color/colorPrimary"
         android:text="@string/fa_icon_archive"
         android:fontFamily="@font/fontawesome"

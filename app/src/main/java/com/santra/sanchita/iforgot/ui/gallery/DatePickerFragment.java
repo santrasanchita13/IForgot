@@ -20,7 +20,6 @@ public class DatePickerFragment extends DialogFragment {
     DatePickerDialog.OnDateSetListener ondateSet;
 
     public DatePickerFragment() {
-        this.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
     }
 
     public void setCallBack(DatePickerDialog.OnDateSetListener ondate) {
@@ -45,7 +44,7 @@ public class DatePickerFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), ondateSet, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.CustomDialog, ondateSet, year, month, day);
         datePickerDialog.setTitle(this.getTag());
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         try {
