@@ -3,7 +3,6 @@ package com.santra.sanchita.iforgot.ui.preview;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -11,7 +10,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -19,6 +17,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.BaseActivity;
+import com.santra.sanchita.iforgot.utils.CommonUtils;
 import com.santra.sanchita.iforgot.utils.Constants;
 
 import java.io.File;
@@ -154,9 +153,11 @@ public class PreviewActivity extends BaseActivity implements PreviewMvpView {
 
             if (imgFile.exists()) {
 
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                CommonUtils.decodeFile(imgFile, PreviewActivity.this, previewImageView);
 
-                previewImageView.setImageBitmap(myBitmap);
+                /*Bitmap myBitmap = CommonUtils.decodeFile(imgFile.getAbsolutePath());
+
+                previewImageView.setImageBitmap(myBitmap);*/
 
             }
         }

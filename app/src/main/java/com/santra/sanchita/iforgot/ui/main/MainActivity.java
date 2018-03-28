@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -42,6 +40,7 @@ import com.santra.sanchita.iforgot.ui.base.BaseActivity;
 import com.santra.sanchita.iforgot.ui.gallery.GalleryActivity;
 import com.santra.sanchita.iforgot.ui.preview.PreviewActivity;
 import com.santra.sanchita.iforgot.utils.AppLogger;
+import com.santra.sanchita.iforgot.utils.CommonUtils;
 import com.santra.sanchita.iforgot.utils.Constants;
 
 import java.io.File;
@@ -184,9 +183,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
                     if (imgFile.exists()) {
 
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        CommonUtils.decodeFile(imgFile, MainActivity.this, galleryImage);
 
-                        galleryImage.setImageBitmap(myBitmap);
+                        /*Bitmap myBitmap = CommonUtils.decodeFile(imgFile.getAbsolutePath());
+
+                        galleryImage.setImageBitmap(myBitmap);*/
 
                     }
                 }

@@ -71,5 +71,5 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/test_ad_unit"/>
+        ads:adUnitId="@string/ad_unit_id_1"/>
 </android.support.constraint.ConstraintLayout>

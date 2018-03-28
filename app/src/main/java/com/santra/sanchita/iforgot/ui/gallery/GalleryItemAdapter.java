@@ -3,7 +3,6 @@ package com.santra.sanchita.iforgot.ui.gallery;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.ImageView;
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.view_image.ViewImageActivity;
+import com.santra.sanchita.iforgot.utils.CommonUtils;
 import com.santra.sanchita.iforgot.utils.Constants;
 
 import java.io.File;
@@ -76,9 +76,11 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
 
                     if (imgFile.exists()) {
 
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        CommonUtils.decodeFile(imgFile, context, imageViewHolder.imageGalleryItem);
 
-                        imageViewHolder.imageGalleryItem.setImageBitmap(myBitmap);
+                        /*Bitmap myBitmap = CommonUtils.decodeFile(imgFile.getAbsolutePath());
+
+                        imageViewHolder.imageGalleryItem.setImageBitmap(myBitmap);*/
 
                         imageViewHolder.imageGalleryItem.setOnClickListener(v -> {
                             Intent intentViewImage = ViewImageActivity.getStartIntent(context);

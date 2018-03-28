@@ -3,7 +3,6 @@ package com.santra.sanchita.iforgot.ui.view_image;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import com.santra.sanchita.iforgot.R;
 import com.santra.sanchita.iforgot.data.db.model.SafeItem;
 import com.santra.sanchita.iforgot.ui.base.BaseActivity;
+import com.santra.sanchita.iforgot.utils.CommonUtils;
 import com.santra.sanchita.iforgot.utils.Constants;
 
 import java.io.File;
@@ -103,9 +103,11 @@ public class ViewImageActivity extends BaseActivity implements ViewImageMvpView 
 
                     if (imgFile.exists()) {
 
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        CommonUtils.decodeFile(imgFile, ViewImageActivity.this, zoomageView);
 
-                        zoomageView.setImageBitmap(myBitmap);
+                        /*Bitmap myBitmap = CommonUtils.decodeFile(imgFile.getAbsolutePath());
+
+                        zoomageView.setImageBitmap(myBitmap);*/
 
                         if(safeItem.getDescription() != null && !safeItem.getDescription().isEmpty()) {
                             descText.setVisibility(View.VISIBLE);
