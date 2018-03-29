@@ -162,6 +162,11 @@ public class CameraFragment extends BaseFragment implements ActivityCompat.OnReq
     private Long fileId;
 
     /**
+     * Location of file
+     */
+    private File storageDir;
+
+    /**
      * {@link CaptureRequest.Builder} for the camera preview
      */
     private CaptureRequest.Builder mPreviewRequestBuilder;
@@ -262,6 +267,11 @@ public class CameraFragment extends BaseFragment implements ActivityCompat.OnReq
 
         @Override
         public void onImageAvailable(ImageReader reader) {
+
+            fileId = System.currentTimeMillis();
+            mFile = new File(storageDir,
+                    fileId + ".jpg");
+
             mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
         }
 
@@ -294,6 +304,9 @@ public class CameraFragment extends BaseFragment implements ActivityCompat.OnReq
                         } else {
                             runPrecaptureSequence();
                         }
+                    }
+                    else {
+                        captureStillPicture();
                     }
                     break;
                 }
@@ -739,11 +752,11 @@ public class CameraFragment extends BaseFragment implements ActivityCompat.OnReq
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                                @NonNull CaptureRequest request,
                                                @NonNull TotalCaptureResult result) {
+                    unlockFocus();
                     Intent intentPreview = PreviewActivity.getStartIntent(getActivity());
                     intentPreview.putExtra(Constants.FILE_PATH, mFile.getAbsolutePath());
                     intentPreview.putExtra(Constants.FILE_ID, fileId);
                     startActivity(intentPreview);
-                    unlockFocus();
                 }
             };
 
@@ -870,16 +883,14 @@ public class CameraFragment extends BaseFragment implements ActivityCompat.OnReq
         super.onViewCreated(view, savedInstanceState);
 
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.mTextureView);
+
+        mTextureView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-
-        fileId = System.currentTimeMillis();
-        mFile = new File(storageDir,
-                fileId + ".jpg");
+        storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
     }
 
     @Override
