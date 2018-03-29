@@ -4,6 +4,7 @@ import com.santra.sanchita.iforgot.di.PerActivity;
 import com.santra.sanchita.iforgot.di.module.ActivityModule;
 import com.santra.sanchita.iforgot.ui.gallery.GalleryActivity;
 import com.santra.sanchita.iforgot.ui.main.MainActivity;
+import com.santra.sanchita.iforgot.ui.main.MainCameraActivity;
 import com.santra.sanchita.iforgot.ui.preview.PreviewActivity;
 import com.santra.sanchita.iforgot.ui.view_image.ViewImageActivity;
 
@@ -18,6 +19,8 @@ import dagger.Component;
 public interface ActivityComponent {
 
     void inject(MainActivity activity);
+
+    void inject(MainCameraActivity activity);
 
     void inject(PreviewActivity activity);
 

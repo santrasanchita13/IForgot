@@ -305,6 +305,11 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
                                     presenter.getImagesByDate(date);
                                 }
                             }
+                            else {
+                                if(galleryAdapter != null) {
+                                    galleryAdapter.notifyDataSetChanged();
+                                }
+                            }
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -339,6 +344,11 @@ public class GalleryActivity extends BaseActivity implements GalleryMvpView {
                                     presenter.getFoundImagesByDateAndSearch(date, search);
                                 } else {
                                     presenter.getFoundImagesByDate(date);
+                                }
+                            }
+                            else {
+                                if(galleryAdapter != null) {
+                                    galleryAdapter.notifyDataSetChanged();
                                 }
                             }
                         } catch (ParseException e) {

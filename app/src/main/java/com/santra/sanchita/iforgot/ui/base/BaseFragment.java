@@ -36,7 +36,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        gestureDetector = new GestureDetector(mActivity, new SwipeGestureDetector() {
+        /*gestureDetector = new GestureDetector(mActivity, new SwipeGestureDetector() {
             @Override
             public void onSwipeUp() {
                 if(fragmentSwipeListener != null) {
@@ -58,7 +58,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
             }
         });
 
-        view.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+        view.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));*/
 
         dialog = new ProgressDialog(getBaseActivity());
         dialog.setCanceledOnTouchOutside(false);
