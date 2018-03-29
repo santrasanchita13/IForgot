@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -20,6 +21,7 @@ import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
+import android.hardware.camera2.params.MeteringRectangle;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
@@ -34,6 +36,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -347,6 +350,68 @@ public class CameraFragment extends BaseFragment implements ActivityCompat.OnReq
         }
 
     };
+
+    /**
+     * Touch to focus
+     */
+    View.OnTouchListener textureViewTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+
+                    if(getActivity() != null) {
+                        CameraManager manager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
+                        try {
+                            if(manager != null && mCameraId != null) {
+                                CameraCharacteristics mCameraCharacteristics = manager.getCameraCharacteristics(mCameraId);
+                                Rect rect = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
+                                Size size = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE);
+                                int areaSize = 200;
+                                int right = rect.right;
+                                int bottom = rect.bottom;
+                                int viewWidth = mTextureView.getWidth();
+                                int viewHeight = mTextureView.getHeight();
+                                int ll, rr;
+                                Rect newRect;
+                                int centerX = (int) event.getX();
+                                int centerY = (int) event.getY();
+                                ll = ((centerX * right) - areaSize) / viewWidth;
+                                rr = ((centerY * bottom) - areaSize) / viewHeight;
+                                int focusLeft = clamp(ll, 0, right);
+                                int focusBottom = clamp(rr, 0, bottom);
+                                newRect = new Rect(focusLeft, focusBottom, focusLeft + areaSize, focusBottom + areaSize);
+                                MeteringRectangle meteringRectangle = new MeteringRectangle(newRect, 500);
+                                MeteringRectangle[] meteringRectangleArr = {meteringRectangle};
+                                if(mPreviewRequestBuilder != null && mCaptureSession != null) {
+                                    mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
+                                    mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_REGIONS, meteringRectangleArr);
+                                    mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_START);
+                                    mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), mCaptureCallback,
+                                            mBackgroundHandler);
+                                }
+                            }
+                        } catch (CameraAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    break;
+            }
+            return true;
+        }
+    };
+
+    private int clamp(int x, int min, int max) {
+        if (x < min) {
+            return min;
+        } else if (x > max) {
+            return max;
+        } else {
+            return x;
+        }
+    }
 
     /**
      * Given {@code choices} of {@code Size}s supported by a camera, choose the smallest one that
@@ -884,6 +949,7 @@ public class CameraFragment extends BaseFragment implements ActivityCompat.OnReq
 
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.mTextureView);
 
+        //Disable Hardware acceleration for texture view since it was crashing the app
         mTextureView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
@@ -906,6 +972,7 @@ public class CameraFragment extends BaseFragment implements ActivityCompat.OnReq
             openCamera(mTextureView.getWidth(), mTextureView.getHeight());
         } else {
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
+            mTextureView.setOnTouchListener(textureViewTouchListener);
         }
     }
 
